@@ -8,7 +8,7 @@ import { Grid } from 'semantic-ui-react'
 class Homepage extends Component {
 
   state = {
-    loggedIn: false,
+    loggedIn: true,
     roomCode: "",
     nickname: "",
     match: {
@@ -47,12 +47,7 @@ class Homepage extends Component {
       return <Logger loggedIn={this.loggedIn} handleNickname={this.handleNickname} handleRoom={this.handleRoom} state={this.state}/>
     }
     else {
-      return <Lobby
-              data-cableApp={this.props.cableApp}
-              data-updateApp={this.updateAppStateMatch}
-              data-matchData={this.state.matchData}
-              data-getMatchData={this.getMatchData}
-              />
+      return <Lobby  />
     }
   }
 
@@ -60,11 +55,13 @@ class Homepage extends Component {
 
   render() {
     return (
-      <Grid verticalAlign='middle' centered columns={3}>
-          <Grid.Column>
-            {this.loggedCheck()}
-          </Grid.Column>
-      </Grid>
+      <div className="Homepage container">
+        <Grid centered columns={3}>
+            <Grid.Column>
+              {this.loggedCheck()}
+            </Grid.Column>
+          </Grid>
+        </div>
     );
   }
 }

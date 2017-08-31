@@ -14,6 +14,20 @@
   color: white;
 }
 
+.ui.form {
+  margin-top:50%;
+  /*vertical-align: middle;*/
+}
+
+.Stage {
+  background-color: red
+}
+
+.Homepage.container {
+  height: 600px;
+  background-color: lightblue;
+}
+
 .App-intro {
   font-size: large;
 }
