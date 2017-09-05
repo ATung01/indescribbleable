@@ -8,23 +8,16 @@ import { Grid } from 'semantic-ui-react'
 class Homepage extends Component {
 
   state = {
-    loggedIn: true,
+    loggedIn: false,
     roomCode: "",
-    nickname: "",
-    match: {
-      match: {},
-      users: []
-    }
+    nickname: ""
   }
 
-  updateAppStateMatch = (newMatch) => {
-    console.log('updateAppStateMatch: ', this.state.match)
+  updateAppStateMatch = (match) => {
+    console.log('updateAppStateMatch: ', this.state.match, match)
     this.setState({
-      match: {
-        match: newMatch.match,
-        users: newMatch.users
-      }
-    })
+      match
+    }, () => console.log(this.state.match))
   }
 
   handleRoom = (event) => {
@@ -36,10 +29,23 @@ class Homepage extends Component {
   }
 
   loggedIn = () => {
-    console.log(this.state)
+
+
+    let myInit = {
+      method: "post",
+      body: JSON.stringify(this.state),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    }
+    fetch("http://localhost:3000/matches", myInit)
+    .then(resp => resp.json())
+    .then(result => result["error"] ? console.log(result) : (this.updateAppStateMatch(result),
     this.setState({
       loggedIn: true
-    }, () => console.log(this.state) )
+    })
+
+  ))
   }
 
   loggedCheck = () => {
@@ -47,7 +53,7 @@ class Homepage extends Component {
       return <Logger loggedIn={this.loggedIn} handleNickname={this.handleNickname} handleRoom={this.handleRoom} state={this.state}/>
     }
     else {
-      return <Lobby  />
+      return <Lobby  match={this.state.match}/>
     }
   }
 

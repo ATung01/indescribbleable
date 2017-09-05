@@ -9,8 +9,8 @@ export default class Drawing extends React.Component {
 
   componentDidMount() {
     const canvas = document.createElement("canvas");
-    canvas.width = 1000;
-    canvas.height = 1000;
+    canvas.width = 500;
+    canvas.height = 500;
     const context = canvas.getContext("2d");
 
     this.setState({ canvas, context });
@@ -90,8 +90,8 @@ export default class Drawing extends React.Component {
         id={"grabbable"}
         image={canvas}
         ref={node => (this.image = node)}
-        width={1000}
-        height={1000}
+        width={500}
+        height={500}
         stroke="black"
         onMouseDown={this.handleMouseDown}
         onMouseUp={this.handleMouseUp}
