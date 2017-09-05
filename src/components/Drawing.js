@@ -16,7 +16,6 @@ export default class Drawing extends React.Component {
     this.setState({ canvas, context });
   }
   componentWillReceiveProps(nextProps){
-    const { canvas } = this.state;
     if (nextProps.saveState === true) {
       console.log("doing something")
       nextProps.saveImage()
@@ -78,11 +77,6 @@ export default class Drawing extends React.Component {
   };
 
 
-  // convertCanvasToImage = (canvas) => {
-  // 	var image = new Image();
-  // 	image.src = canvas.toDataURL("image/png");
-  // 	return image;
-  // }
 
 
 
