@@ -3,39 +3,36 @@ import {Layer, Stage} from 'react-konva';
 import Drawing from './Drawing'
 import {Button} from 'semantic-ui-react'
 
+var canvas
+var image
+
 class CanvasElements extends React.Component {
 
   state = {
     save: false
   }
 
-  handleClick = () => {
+  componentDidMount(){
+    this.pollToSave()
+  }
+
+  pollToSave = () => {
     this.setState({
       save: true
     }, console.log(this.state, "I set save to true"))
+    setTimeout(this.pollToSave, 500)
   }
 
-  addToStore = (image) => {
-    let myInit = {
-      method: "post",
-      body: JSON.stringify(image.src),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }
-    return fetch("http://localhost:3000/sketches", myInit )
-    .then(resp => resp.json()).then(result => console.log(result))
-  }
+
 
   saveImage = () => {
     this.setState({
       save: false
     }, console.log(this.state, "I set save to false"))
-    let canvas = document.getElementsByTagName('canvas')[0]
-    var image = new Image();
+    canvas = document.getElementsByTagName('canvas')[0]
+    image = new Image();
     image.src = canvas.toDataURL("image/png").slice(22, -1) //taking out data:image/png;base64, from the front of the string
-    this.addToStore(image)
-
+    this.props.addToStore(image)
 
   }
 

@@ -3,7 +3,6 @@ import { Image, Table, Header } from 'semantic-ui-react'
 
 const PlayerList = (props) => {
   const List = () => {
-    console.log(props)
     let listBody = props.players.map((user)=>{
       return (
         <Table.Row>
