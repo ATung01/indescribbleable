@@ -94,23 +94,12 @@ export default class Lobby extends React.Component {
     .then(resp => resp.json())
     .then(result => {
       console.log("RESULT",result)
-      if (result.current_turn) {
         this.setState({
           started: result.started,
           savedImage: result.sketch.data,
           users: result.users,
           currentTurn: result.current_turn
-        })
-      } else {
-        this.setState({
-          started: result.started,
-          savedImage: result.sketch.data,
-          users: result.users
-        })
-
-      }
-
-
+      })
     })
     setTimeout(this.checkGameStatus, 5000)
 
@@ -122,8 +111,8 @@ export default class Lobby extends React.Component {
     return (
       <div>
       {console.log("current Turn: ", this.state.currentTurn, "current User: ", this.state.currentUser)}
-      {this.state.started === "t" && !!(this.state.currentTurn.id === this.state.currentUser.id) && <CanvasElements addToStore={this.addToStore}/>}
-      {this.state.started === "t" && !!(this.state.currentTurn.id !== this.state.currentUser.id) && <Guesser savedImage={this.state.savedImage}/>}
+      {this.state.started === "t" && this.state.currentTurn.id === this.state.currentUser.id && <CanvasElements addToStore={this.addToStore}/>}
+      {this.state.started === "t" && this.state.currentTurn.id !== this.state.currentUser.id && <Guesser savedImage={this.state.savedImage}/>}
       {this.state.started === "f" && <Button className="GameStarter" onClick={this.startGame}>Press this to start</Button>}
       <Button className="GameEnder" onClick={this.endTurn}>Press this to end the round</Button>
       {this.state.users.length !== 0 && < PlayerList players={this.state.users}/>}
