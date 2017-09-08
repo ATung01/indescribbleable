@@ -1,7 +1,6 @@
 import React from 'react';
 import {Layer, Stage} from 'react-konva';
 import Drawing from './Drawing'
-import {Button} from 'semantic-ui-react'
 
 var canvas
 var image
@@ -19,8 +18,7 @@ class CanvasElements extends React.Component {
   pollToSave = () => {
     this.setState({
       save: true
-    }, console.log(this.state, "I set save to true"))
-    setTimeout(this.pollToSave, 500)
+    }, () => { setTimeout(this.pollToSave, 5000)})
   }
 
 
@@ -28,11 +26,12 @@ class CanvasElements extends React.Component {
   saveImage = () => {
     this.setState({
       save: false
-    }, console.log(this.state, "I set save to false"))
+    })
     canvas = document.getElementsByTagName('canvas')[0]
     image = new Image();
     image.src = canvas.toDataURL("image/png").slice(22, -1) //taking out data:image/png;base64, from the front of the string
     this.props.addToStore(image)
+
 
   }
 
@@ -46,7 +45,8 @@ class CanvasElements extends React.Component {
                    <Drawing saveState={this.state.save} saveImage={this.saveImage}/>
                 </Layer>
             </Stage>
-            <Button onClick={this.handleClick}/>
+
+
 
           </div>
         );

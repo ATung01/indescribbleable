@@ -17,7 +17,6 @@ export default class Drawing extends React.Component {
   }
   componentWillReceiveProps(nextProps){
     if (nextProps.saveState === true) {
-      console.log("doing something", nextProps)
       nextProps.saveImage()
     }
   }
