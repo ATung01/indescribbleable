@@ -4,7 +4,6 @@ import Logger from './components/Logger'
 import Lobby from './components/Lobby'
 import { Grid } from 'semantic-ui-react'
 import ActionCableProvider from 'react-actioncable-provider'
-import {ActionCable} from 'react-actioncable-provider'
 
 
 class Homepage extends Component {
@@ -52,19 +51,11 @@ class Homepage extends Component {
 
   loggedCheck = () => {
     if (this.state.loggedIn === false) {
-      return <Logger loggedIn={this.loggedIn} handleNickname={this.handleNickname} handleRoom={this.handleRoom} state={this.state}/>
+      return <Logger loggedIn={this.loggedIn} handleNickname={this.handleNickname} handleRoom={this.handleRoom} state={this.state} />
     }
     else {
       return <Lobby  match={this.state.match}/>
     }
-  }
-
-  onReceived = (message) => {
-    console.log(message)
-  }
-
-  sendMessage = () => {
-    this.refs.roomChannel.perform('speak', {message:"hello"})
   }
 
   render() {
@@ -74,8 +65,6 @@ class Homepage extends Component {
         <Grid centered columns={3}>
             <Grid.Column>
               {this.loggedCheck()}
-              <ActionCable ref='roomChannel' channel={{channel: 'MatchChannel'}} onReceived={this.onReceived} />
-              <button onClick={this.sendMessage}>Send</button>
             </Grid.Column>
           </Grid>
           </ActionCableProvider>

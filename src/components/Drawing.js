@@ -32,6 +32,8 @@ export default class Drawing extends React.Component {
   handleMouseUp = () => {
     console.log("mouseup");
     this.setState({ isDrawing: false });
+    this.props.saveImage()
+    
   };
 
   handleMouseMove = () => {

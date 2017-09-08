@@ -11,15 +11,15 @@ class CanvasElements extends React.Component {
     save: false
   }
 
-  componentDidMount(){
-    this.pollToSave()
-  }
+  // componentDidMount(){
+  //   this.pollToSave()
+  // }
 
-  pollToSave = () => {
-    this.setState({
-      save: true
-    }, () => { setTimeout(this.pollToSave, 5000)})
-  }
+  // pollToSave = () => {
+  //   this.setState({
+  //     save: true
+  //   }, () => { setTimeout(this.pollToSave, 5000)})
+  // }
 
 
 
@@ -30,10 +30,10 @@ class CanvasElements extends React.Component {
     canvas = document.getElementsByTagName('canvas')[0]
     image = new Image();
     image.src = canvas.toDataURL("image/png").slice(22, -1) //taking out data:image/png;base64, from the front of the string
-    this.props.addToStore(image)
-
-
+    this.props.sendCanvas(image)
   }
+
+
 
 
 
@@ -42,7 +42,7 @@ class CanvasElements extends React.Component {
           <div>
             <Stage width={500} height={500}>
                 <Layer>
-                   <Drawing saveState={this.state.save} saveImage={this.saveImage}/>
+                   <Drawing saveState={this.state.save} saveImage={this.saveImage}  sendCanvas={this.props.sendCanvas}/>
                 </Layer>
             </Stage>
 
