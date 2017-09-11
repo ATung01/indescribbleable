@@ -4,6 +4,7 @@ import { Button} from 'semantic-ui-react';
 import PlayerList from './PlayerList'
 import Guesser from './Guesser'
 import {ActionCable} from 'react-actioncable-provider'
+import EndScreen from './EndScreen'
 
 
 
@@ -13,10 +14,14 @@ export default class Lobby extends React.Component {
 
   state = {
     started: "f",
+    ended: "f",
     users: [],
     currentUser: {id:0},
     currentTurn: {id:0},
-    savedImage: ""
+    savedImage: "",
+    guess: "",
+    correct: "f",
+    points: 0
   }
 
   componentDidMount(){
@@ -24,15 +29,14 @@ export default class Lobby extends React.Component {
       currentUser: this.props.match.current_user
     })
 
-
   }
+
   startGame = () => {
       this.setState({
         roomCode: this.props.match.roomCode,
         currentTurn: this.props.match.current_user,
         started: true
       })
-
     this.refs.roomChannel.perform('startGame', {
       started: true,
       currentUserID: this.props.match.current_user.id,
@@ -47,82 +51,27 @@ export default class Lobby extends React.Component {
       currentTurnID: this.state.currentTurn.id
     })
   }
+  sendTurnStatus = () => {
+    this.refs.roomChannel.perform('checkGameStatus', {id: this.props.match.current_user.match_id})
+  }
 
-  // startGame = () => {
-  //   this.setState({
-  //     roomCode: this.props.match.roomCode,
-  //     users: this.props.match.users,
-  //     currentTurn: this.props.match.current_user,
-  //     started: true
-  //   })
-  //
-  //   let myInit = {
-  //     method: "PATCH",
-  //     body: JSON.stringify({started: true, currentUserID: this.props.match.current_user.id}),
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     }
-  //   }
-  //   return fetch(`http://localhost:3000/matches/${this.props.match.current_user.match_id}`, myInit )
-  //   .then(resp => resp.json())
-  //   .then(result => console.log(result))
-  //
-  // }
+  sendCanvas = (image) => {
+    this.refs.roomChannel.perform('sendCanvas', {image: image.src, room_code: this.state.roomCode})
+  }
 
-  // endTurn = () => {
-  //   let myInit = {
-  //     method: "post",
-  //     body: JSON.stringify({roomCode: this.state.roomCode, currentUserID: this.props.match.current_user.id}),
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     }
-  //   }
-  //   fetch(`http://localhost:3000/matches/turn_end`, myInit)
-  //   .then(resp => resp.json())
-  //   .then(result => {if (result.status === "game end") {
-  //     this.setState({
-  //       currentTurn: result,
-  //       ended: "t"
-  //     })
-  //   }
-  //   else {
-  //     this.setState({
-  //       currentTurn: result
-  //     })
-  //   }
-  // })
-  // }
-
-  // addToStore = (image) => {
-  //   let myInit = {
-  //     method: "post",
-  //     body: JSON.stringify({image: image.src, room_code: this.state.roomCode}),
-  //     headers: {
-  //       "Content-Type": "application/json"
-  //     }
-  //   }
-  //   return fetch("http://localhost:3000/sketches", myInit )
-  //   .then(resp => resp.json())
-  //   .then(result => this.setState({
-  //     savedImage: result.data
-  //   }))
-  // }
-
-  // checkGameStatus = () => {
-  //   fetch(`http://localhost:3000/matches/${this.props.match.current_user.match_id}`)
-  //   .then(resp => resp.json())
-  //   .then(result => {
-  //     console.log("RESULT",result)
-  //       this.setState({
-  //         started: result.started,
-  //         savedImage: result.sketch.data,
-  //         users: result.users,
-  //         currentTurn: result.current_turn
-  //     })
-  //   })
-  //   setTimeout(this.checkGameStatus, 5000)
-  //
-  // }
+  updateGuess = (event) => {
+    this.setState({
+      guess: event.target.value
+    })
+  }
+  takeAGuess = () => {
+    this.refs.roomChannel.perform('takeAGuess', {
+      id: this.props.match.current_user.match_id,
+      guess: this.state.guess,
+      current_user_ID: this.state.currentUser.id,
+      current_turn_ID: this.state.currentTurn.id
+    })
+  }
 
   onReceived = (result) => {
     if (!!result.startGame) {
@@ -132,7 +81,7 @@ export default class Lobby extends React.Component {
         started: 't',
         answer: result.startGame.current_match.answer,
         currentTurn: result.startGame.current_turn
-      }, () => console.log(this.state.currentTurn))
+      }, () => console.log(this.state.answer))
     }
       else if (!!result.status) {
         this.setState({
@@ -147,36 +96,52 @@ export default class Lobby extends React.Component {
             savedImage: result.canvas
           })
       }
+      else if (!!result.endGame) {
+        this.setState({
+          ended: "t"
+        })
+      }
       else if (!!result.endTurn) {
         console.log(result.endTurn)
+        this.sendTurnStatus()
+      }
+      else if (!!result.guess.points) {
+        this.sendTurnStatus()
+      }
+      else if (!!result.guess.wrong) {
+        console.log("wrong answer")
       }
       else {
         console.log("error", result)
       }
     }
 
-  sendTurnStatus = () => {
-    this.refs.roomChannel.perform('checkGameStatus', {id: `${this.props.match.current_user.match_id}`})
-  }
-
-  sendCanvas = (image) => {
-    this.refs.roomChannel.perform('sendCanvas', {image: image.src, room_code: this.state.roomCode})
-  }
 
   render(){
 
     return (
       <div>
         <ActionCable ref='roomChannel' channel={{channel: 'MatchChannel'}} onReceived={this.onReceived} />
-          {this.state.started === "t" && this.state.currentTurn.id === this.state.currentUser.id && <CanvasElements addToStore={this.addToStore}
-           sendTurnStatus={this.sendTurnStatus}
-           sendCanvas={this.sendCanvas}/>}
-          {this.state.started === "t" && this.state.currentTurn.id !== this.state.currentUser.id && <Guesser savedImage={this.state.savedImage}/>}
+
+        {this.state.started === "t" && this.state.currentTurn.id === this.state.currentUser.id && this.state.ended === 'f' &&
+        <CanvasElements
+            addToStore={this.addToStore}
+            sendTurnStatus={this.sendTurnStatus}
+            sendCanvas={this.sendCanvas}
+            />}
+          {this.state.started === "t" && this.state.currentTurn.id !== this.state.currentUser.id && this.state.ended === 'f' &&
+          <Guesser
+            savedImage={this.state.savedImage}
+            takeAGuess={this.takeAGuess}
+            updateGuess={this.updateGuess}
+            />}
           {this.state.started === "f" && <Button className="GameStarter" onClick={this.startGame}>Press this to start</Button>}
           <Button className="GameEnder" onClick={this.endTurn}>Press this to end the round</Button>
-          {this.state.users.length !== 0 && < PlayerList players={this.state.users}/>}
-          <button onClick={this.sendTurnStatus}>Send turn</button>
-          <button onClick={this.sendCanvas}>Send canvas</button>
+          < PlayerList players={this.state.users} />
+          <Button onClick={this.sendTurnStatus}>Click here to get Ready</Button>
+          {this.state.ended === "t" && < EndScreen />}
+
+
 
       </div>
     )
