@@ -24,53 +24,74 @@ export default class Lobby extends React.Component {
       currentUser: this.props.match.current_user
     })
 
-    // this.checkGameStatus()
+
   }
-
   startGame = () => {
-    this.setState({
+      this.setState({
+        roomCode: this.props.match.roomCode,
+        currentTurn: this.props.match.current_user,
+        started: true
+      })
+
+    this.refs.roomChannel.perform('startGame', {
+      started: true,
+      currentUserID: this.props.match.current_user.id,
       roomCode: this.props.match.roomCode,
-      users: this.props.match.users,
-      currentTurn: this.props.match.current_user,
-      started: true
+      currentTurn: this.props.match.current_user
     })
-
-    let myInit = {
-      method: "PATCH",
-      body: JSON.stringify({started: true, currentUserID: this.props.match.current_user.id}),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }
-    return fetch(`http://localhost:3000/matches/${this.props.match.current_user.match_id}`, myInit )
-    .then(resp => resp.json())
-    .then(result => console.log(result))
-
   }
 
   endTurn = () => {
-    let myInit = {
-      method: "post",
-      body: JSON.stringify({roomCode: this.state.roomCode, currentUserID: this.props.match.current_user.id}),
-      headers: {
-        "Content-Type": "application/json"
-      }
-    }
-    fetch(`http://localhost:3000/matches/turn_end`, myInit)
-    .then(resp => resp.json())
-    .then(result => {if (result.status === "game end") {
-      this.setState({
-        currentTurn: result,
-        ended: "t"
-      })
-    }
-    else {
-      this.setState({
-        currentTurn: result
-      })
-    }
-  })
+    this.refs.roomChannel.perform('endTurn', {
+      roomCode: this.state.roomCode,
+      currentTurnID: this.state.currentTurn.id
+    })
   }
+
+  // startGame = () => {
+  //   this.setState({
+  //     roomCode: this.props.match.roomCode,
+  //     users: this.props.match.users,
+  //     currentTurn: this.props.match.current_user,
+  //     started: true
+  //   })
+  //
+  //   let myInit = {
+  //     method: "PATCH",
+  //     body: JSON.stringify({started: true, currentUserID: this.props.match.current_user.id}),
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     }
+  //   }
+  //   return fetch(`http://localhost:3000/matches/${this.props.match.current_user.match_id}`, myInit )
+  //   .then(resp => resp.json())
+  //   .then(result => console.log(result))
+  //
+  // }
+
+  // endTurn = () => {
+  //   let myInit = {
+  //     method: "post",
+  //     body: JSON.stringify({roomCode: this.state.roomCode, currentUserID: this.props.match.current_user.id}),
+  //     headers: {
+  //       "Content-Type": "application/json"
+  //     }
+  //   }
+  //   fetch(`http://localhost:3000/matches/turn_end`, myInit)
+  //   .then(resp => resp.json())
+  //   .then(result => {if (result.status === "game end") {
+  //     this.setState({
+  //       currentTurn: result,
+  //       ended: "t"
+  //     })
+  //   }
+  //   else {
+  //     this.setState({
+  //       currentTurn: result
+  //     })
+  //   }
+  // })
+  // }
 
   // addToStore = (image) => {
   //   let myInit = {
@@ -104,7 +125,16 @@ export default class Lobby extends React.Component {
   // }
 
   onReceived = (result) => {
-      if (!!result.status) {
+    if (!!result.startGame) {
+      this.setState({
+        roomCode: result.startGame.current_match.room_code,
+        users: result.startGame.all_users,
+        started: 't',
+        answer: result.startGame.current_match.answer,
+        currentTurn: result.startGame.current_turn
+      }, () => console.log(this.state.currentTurn))
+    }
+      else if (!!result.status) {
         this.setState({
           started: result.status.started,
           savedImage: result.status.sketch.data,
@@ -113,13 +143,15 @@ export default class Lobby extends React.Component {
         })
       }
       else if (!!result.canvas) {
-        console.log(result)
         this.setState({
             savedImage: result.canvas
           })
       }
+      else if (!!result.endTurn) {
+        console.log(result.endTurn)
+      }
       else {
-        console.log("error", result[0])
+        console.log("error", result)
       }
     }
 
