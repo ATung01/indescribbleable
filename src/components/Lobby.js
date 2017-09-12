@@ -7,6 +7,8 @@ import {ActionCable} from 'react-actioncable-provider'
 import EndScreen from './EndScreen'
 import { Grid } from 'semantic-ui-react'
 import ReactCountdownClock from 'react-countdown-clock'
+import RobotGuess from './RobotGuess'
+import Answer from './Answer'
 
 
 
@@ -18,6 +20,7 @@ export default class Lobby extends React.Component {
   state = {
     started: "f",
     ended: "f",
+    answer: "",
     timer: "",
     ready: "f",
     users: [],
@@ -25,6 +28,8 @@ export default class Lobby extends React.Component {
     currentTurn: {id:0},
     savedImage: "",
     guess: "",
+    showRobot: "f",
+    robotGuess: [],
     correct: "f",
     points: 0
   }
@@ -54,41 +59,45 @@ export default class Lobby extends React.Component {
   endTurn = () => {
     this.refs.roomChannel.perform('endTurn', {
       roomCode: this.state.roomCode,
+      image: this.state.savedImage,
       currentTurnID: this.state.currentTurn.id
     })
   }
   sendTurnStatus = () => {
-    this.refs.roomChannel.perform('checkGameStatus', {id: this.props.match.current_user.match_id})
+    this.refs.roomChannel.perform('checkGameStatus', {id: this.props.match.current_user.match_id, room_code: this.state.roomCode})
   }
 
   sendCanvas = (image) => {
     this.refs.roomChannel.perform('sendCanvas', {image: image.src, room_code: this.state.roomCode})
   }
-  sendToRobot = () => {
-    this.refs.roomChannel.perform('sendToRobot', {image: this.state.savedImage, room_code: this.state.roomCode})
-  }
+  // sendToRobot = () => {
+  //   this.refs.roomChannel.perform('sendToRobot', {image: this.state.savedImage, room_code: this.state.roomCode})
+  // }
 
   updateGuess = (event) => {
     this.setState({
-      guess: event.target.value
+      guess: event.target.value,
+      room_code: this.state.roomCode
     })
   }
   takeAGuess = () => {
     this.refs.roomChannel.perform('takeAGuess', {
       id: this.props.match.current_user.match_id,
       guess: this.state.guess,
+      room_code: this.state.roomCode,
       current_user_ID: this.state.currentUser.id,
       current_turn_ID: this.state.currentTurn.id
     })
   }
 
   onReceived = (result) => {
+    console.log(result)
     if (!!result.startGame) {
       this.setState({
         roomCode: result.startGame.current_match.room_code,
         users: result.startGame.all_users,
         started: 't',
-        answer: result.startGame.current_match.answer,
+        answer: result.startGame.answer,
         currentTurn: result.startGame.current_turn
       })
     }
@@ -103,7 +112,8 @@ export default class Lobby extends React.Component {
           started: result.status.started,
           savedImage: result.status.sketch.data,
           users: result.status.users,
-          currentTurn: result.status.current_turn
+          currentTurn: result.status.current_turn,
+          answer: result.status.answer
         })
       }
       else if (!!result.canvas) {
@@ -113,16 +123,21 @@ export default class Lobby extends React.Component {
       }
       else if (!!result.endGame) {
         this.setState({
-          ended: "t"
+          ended: "t",
+          showRobot: "t",
+          robotGuess: result.endGame.robot_guesses
         })
       }
       else if (!!result.endTurn) {
-        this.setState({
-          ready: "f"
-        })
-        this.sendToRobot()
         this.sendTurnStatus()
+        this.setState({
+          ready: "f",
+          showRobot: "t",
+          robotGuess: result.endTurn.robot_guesses,
+          savedImage: ""
+        })
       }
+
       else if (!!result.guess.points) {
         this.sendTurnStatus()
       }
@@ -136,7 +151,7 @@ export default class Lobby extends React.Component {
 
 
   render(){
-
+      console.log(this.props.match.roomCode)
     return (
       <div>
         <ActionCable ref='roomChannel' channel={{channel: 'MatchChannel', room: this.props.match.roomCode}} onReceived={this.onReceived} />
@@ -146,7 +161,8 @@ export default class Lobby extends React.Component {
             addToStore={this.addToStore}
             sendTurnStatus={this.sendTurnStatus}
             sendCanvas={this.sendCanvas}
-            />}
+            /> }
+        {this.state.started === "t" && this.state.currentTurn.id === this.state.currentUser.id && this.state.ended === 'f' && <Answer answer={this.state.answer}/>}
         </Grid.Column>
 
         <Grid.Column>
@@ -168,7 +184,9 @@ export default class Lobby extends React.Component {
           <Button className="GameEnder" onClick={this.endTurn}>Press this to end the round</Button>
           < PlayerList players={this.state.users} />
           {this.state.ended === "t" && < EndScreen />}
+          {this.state.showRobot === "t" && < RobotGuess guesses={this.state.robotGuess}/>}
         </Grid.Column>
+
 
       </div>
     )

@@ -15,10 +15,9 @@ class Homepage extends Component {
   }
 
   updateAppStateMatch = (match) => {
-    console.log('updateAppStateMatch: ', this.state.match, match)
     this.setState({
       match
-    }, () => console.log(this.state.match))
+    })
   }
 
   handleRoom = (event) => {
