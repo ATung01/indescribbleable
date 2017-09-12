@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+body, html {
+  background:lightblue;
+}
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
@@ -14,11 +18,27 @@
   color: white;
 }
 
+.ui.grid {
+  margin-top:0;
+}
+
+table {
+  position:absolute;
+  top:0;
+  right:10px;
+}
+
 .ui.form {
   margin-top:50%;
   /*vertical-align: middle;*/
 }
+.react-countdown-clock {
+  float: right;
+}
 
+.ui.celled.collapsing.very.basic.table.player-list {
+  float: right;
+}
 .Stage {
   background-color: red
 }

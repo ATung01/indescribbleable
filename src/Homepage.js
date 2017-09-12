@@ -51,7 +51,12 @@ class Homepage extends Component {
 
   loggedCheck = () => {
     if (this.state.loggedIn === false) {
-      return <Logger loggedIn={this.loggedIn} handleNickname={this.handleNickname} handleRoom={this.handleRoom} state={this.state} />
+      return (
+        <Grid.Column>
+          <Logger loggedIn={this.loggedIn} handleNickname={this.handleNickname} handleRoom={this.handleRoom} state={this.state} />
+        </Grid.Column>
+      )
+
     }
     else {
       return <Lobby  match={this.state.match}/>
@@ -63,9 +68,7 @@ class Homepage extends Component {
       <div className="Homepage container">
       <ActionCableProvider url='ws://localhost:3000/cable'>
         <Grid centered columns={3}>
-            <Grid.Column>
               {this.loggedCheck()}
-            </Grid.Column>
           </Grid>
           </ActionCableProvider>
         </div>
