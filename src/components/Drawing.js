@@ -22,7 +22,6 @@ export default class Drawing extends React.Component {
   }
 
   handleMouseDown = () => {
-    console.log("mousedown");
     this.setState({ isDrawing: true });
 
     const stage = this.image.parent.parent;
@@ -30,10 +29,9 @@ export default class Drawing extends React.Component {
   };
 
   handleMouseUp = () => {
-    console.log("mouseup");
     this.setState({ isDrawing: false });
     this.props.saveImage()
-    
+
   };
 
   handleMouseMove = () => {
@@ -41,7 +39,6 @@ export default class Drawing extends React.Component {
     const { context, isDrawing, mode } = this.state;
 
     if (isDrawing) {
-      console.log("drawing");
 
       context.strokeStyle = "#2E4053";
       context.lineJoin = "round";
@@ -58,7 +55,6 @@ export default class Drawing extends React.Component {
         x: this.lastPointerPosition.x - this.image.x(),
         y: this.lastPointerPosition.y - this.image.y()
       };
-      console.log("moveTo", localPos);
       context.moveTo(localPos.x, localPos.y);
 
       const stage = this.image.parent.parent;
@@ -68,7 +64,6 @@ export default class Drawing extends React.Component {
         x: pos.x - this.image.x(),
         y: pos.y - this.image.y()
       };
-      console.log("lineTo", localPos);
       context.lineTo(localPos.x, localPos.y);
       context.closePath();
       context.stroke();

@@ -39,6 +39,7 @@ class Homepage extends Component {
       }
     }
     fetch("https://indescribbleable-ruby.herokuapp.com/matches", myInit)
+    // fetch("http://localhost:3000/matches", myInit)
     .then(resp => resp.json())
     .then(result => result["error"] ? console.log(result) : (this.updateAppStateMatch(result),
     this.setState({
@@ -61,6 +62,7 @@ class Homepage extends Component {
       return <Lobby  match={this.state.match}/>
     }
   }
+  // <ActionCableProvider url='ws://localhost:3000/cable'>
 
   render() {
     return (

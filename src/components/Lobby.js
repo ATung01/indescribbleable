@@ -91,7 +91,7 @@ export default class Lobby extends React.Component {
   }
 
   onReceived = (result) => {
-    console.log(result)
+    // console.log(result)
     if (!!result.startGame) {
       this.setState({
         roomCode: result.startGame.current_match.room_code,
@@ -117,6 +117,7 @@ export default class Lobby extends React.Component {
         })
       }
       else if (!!result.canvas) {
+        console.log(result)
         this.setState({
             savedImage: result.canvas
           })
