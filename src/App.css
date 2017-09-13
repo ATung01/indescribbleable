@@ -28,6 +28,12 @@ table {
   right:10px;
 }
 
+.ui.card.AnswerCard {
+  position:absolute;
+  bottom:0;
+  left:0;
+}
+
 canvas {
   cursor:'pointer'
 }

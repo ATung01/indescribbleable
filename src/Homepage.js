@@ -41,7 +41,7 @@ class Homepage extends Component {
     fetch("https://indescribbleable-ruby.herokuapp.com/matches", myInit)
     // fetch("http://localhost:3000/matches", myInit)
     .then(resp => resp.json())
-    .then(result => result["error"] ? console.log(result) : (this.updateAppStateMatch(result),
+    .then(result => result["error"] ? this.setState({error: result["error"]}) : (this.updateAppStateMatch(result),
     this.setState({
       loggedIn: true
     })
@@ -53,7 +53,10 @@ class Homepage extends Component {
     if (this.state.loggedIn === false) {
       return (
         <Grid.Column>
-          <Logger loggedIn={this.loggedIn} handleNickname={this.handleNickname} handleRoom={this.handleRoom} state={this.state} />
+          <div>
+            <Logger loggedIn={this.loggedIn} handleNickname={this.handleNickname} handleRoom={this.handleRoom} state={this.state} />
+            <p className="error">{this.state.error}</p>
+          </div>
         </Grid.Column>
       )
 

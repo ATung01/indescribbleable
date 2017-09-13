@@ -7,7 +7,7 @@ const Answer = (props) => {
 
 
   return(
-    <Card>
+    <Card className="AnswerCard">
       <Card.Content>
         <Card.Header>Draw a </Card.Header>
         <Card.Description>{props.answer}</Card.Description>
