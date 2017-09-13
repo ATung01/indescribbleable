@@ -182,7 +182,7 @@ export default class Lobby extends React.Component {
         size={50}
         onComplete={this.endTurn} />}
           {this.state.started === "f" && <Button className="GameStarter" onClick={this.startGame}>Press this to start</Button>}
-          <Button className="GameEnder" onClick={this.endTurn}>Press this to end the round</Button>
+          {this.state.started === "t" && this.state.currentTurn.id === this.state.currentUser.id && this.state.ended === 'f' && <Button className="GameEnder" onClick={this.endTurn}>Press this to end the round</Button>}
           < PlayerList players={this.state.users} />
           {this.state.ended === "t" && < EndScreen />}
           {this.state.showRobot === "t" && < RobotGuess guesses={this.state.robotGuess}/>}

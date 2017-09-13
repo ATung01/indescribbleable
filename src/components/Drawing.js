@@ -9,8 +9,8 @@ export default class Drawing extends React.Component {
 
   componentDidMount() {
     const canvas = document.createElement("canvas");
-    canvas.width = 500;
-    canvas.height = 500;
+    canvas.width = 400;
+    canvas.height = 400;
     const context = canvas.getContext("2d");
 
     this.setState({ canvas, context });
@@ -89,8 +89,11 @@ export default class Drawing extends React.Component {
         height={500}
         stroke="black"
         onMouseDown={this.handleMouseDown}
+        onTouchStart={this.handleMouseDown}
         onMouseUp={this.handleMouseUp}
+        onTouchEnd={this.handleMouseUp}
         onMouseMove={this.handleMouseMove}
+        onTouchMove={this.handleMouseMove}
       />
 
     );
