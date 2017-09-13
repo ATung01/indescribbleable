@@ -38,8 +38,8 @@ class Homepage extends Component {
         "Content-Type": "application/json"
       }
     }
-    fetch("https://indescribbleable-ruby.herokuapp.com/matches", myInit)
-    // fetch("http://localhost:3000/matches", myInit)
+    // fetch("https://indescribbleable-ruby.herokuapp.com/matches", myInit)
+    fetch("http://localhost:3000/matches", myInit)
     .then(resp => resp.json())
     .then(result => result["error"] ? this.setState({error: result["error"]}) : (this.updateAppStateMatch(result),
     this.setState({
@@ -65,12 +65,12 @@ class Homepage extends Component {
       return <Lobby  match={this.state.match}/>
     }
   }
-  // <ActionCableProvider url='ws://localhost:3000/cable'>
+  // <ActionCableProvider url='wss://indescribbleable-ruby.herokuapp.com/cable'>
 
   render() {
     return (
       <div className="Homepage container">
-      <ActionCableProvider url='wss://indescribbleable-ruby.herokuapp.com/cable'>
+      <ActionCableProvider url='ws://localhost:3000/cable'>
         <Grid centered columns={3}>
               {this.loggedCheck()}
           </Grid>

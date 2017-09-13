@@ -1,11 +1,10 @@
 import React from 'react'
 import CanvasElements from './CanvasElements'
-import { Button} from 'semantic-ui-react';
 import PlayerList from './PlayerList'
 import Guesser from './Guesser'
 import {ActionCable} from 'react-actioncable-provider'
 import EndScreen from './EndScreen'
-import { Grid } from 'semantic-ui-react'
+import { Button, Grid } from 'semantic-ui-react'
 import ReactCountdownClock from 'react-countdown-clock'
 import RobotGuess from './RobotGuess'
 import Answer from './Answer'
@@ -28,6 +27,7 @@ export default class Lobby extends React.Component {
     currentTurn: {id:0},
     savedImage: "",
     guess: "",
+    correctGuess: "f",
     showRobot: "f",
     robotGuess: [],
     correct: "f",
@@ -140,6 +140,9 @@ export default class Lobby extends React.Component {
       }
 
       else if (!!result.guess.points) {
+        this.setState({
+          correctGuess: "t"
+        })
         this.sendTurnStatus()
       }
       else if (!!result.guess.wrong) {
@@ -162,27 +165,30 @@ export default class Lobby extends React.Component {
             addToStore={this.addToStore}
             sendTurnStatus={this.sendTurnStatus}
             sendCanvas={this.sendCanvas}
+            answer={this.state.answer}
+            endTurn={this.endTurn}
             /> }
-        {this.state.started === "t" && this.state.currentTurn.id === this.state.currentUser.id && this.state.ended === 'f' && <Answer answer={this.state.answer}/>}
+
         </Grid.Column>
 
         <Grid.Column>
           {this.state.started === "t" && this.state.currentTurn.id !== this.state.currentUser.id && this.state.ended === 'f' &&
           <Guesser
+            currentTurn={this.state.currentTurn}
             savedImage={this.state.savedImage}
             takeAGuess={this.takeAGuess}
             updateGuess={this.updateGuess}
+            correctGuess={this.state.correctGuess}
             />}
         </Grid.Column>
 
         <Grid.Column>
         {this.state.started === "t" && this.state.currentTurn.id === this.state.currentUser.id && this.state.ended === 'f' &&
-        <ReactCountdownClock seconds={45}
+        <ReactCountdownClock seconds={60}
         color="#000"
-        size={50}
+        size={80}
         onComplete={this.endTurn} />}
           {this.state.started === "f" && <Button className="GameStarter" onClick={this.startGame}>Press this to start</Button>}
-          {this.state.started === "t" && this.state.currentTurn.id === this.state.currentUser.id && this.state.ended === 'f' && <Button className="GameEnder" onClick={this.endTurn}>Press this to end the round</Button>}
           < PlayerList players={this.state.users} />
           {this.state.ended === "t" && < EndScreen />}
           {this.state.showRobot === "t" && < RobotGuess guesses={this.state.robotGuess}/>}

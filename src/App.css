@@ -28,17 +28,17 @@ table {
   right:10px;
 }
 
-.ui.card.AnswerCard {
+/*.ui.card.AnswerCard {
   position:absolute;
   bottom:0;
   left:0;
-}
+}*/
 
 canvas {
   cursor:'pointer'
 }
 
-.ui.form {
+.ui.form.Logger {
   margin-top:50%;
   /*vertical-align: middle;*/
 }

@@ -12,7 +12,7 @@ export default class Logger extends React.Component {
   render(){
     return (
     <div>
-      <Form >
+      <Form className="Logger">
         <Form.Field >
           <label>Room Code</label>
           <input placeholder='Enter your Room Code' value={this.props.state.roomCode} onChange={this.props.handleRoom} />

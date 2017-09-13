@@ -1,6 +1,9 @@
 import React from 'react';
 import {Layer, Stage} from 'react-konva';
 import Drawing from './Drawing'
+import Answer from './Answer'
+import { Button } from 'semantic-ui-react'
+
 
 var canvas
 var image
@@ -45,8 +48,8 @@ class CanvasElements extends React.Component {
                    <Drawing saveState={this.state.save} saveImage={this.saveImage}  sendCanvas={this.props.sendCanvas}/>
                 </Layer>
             </Stage>
-
-
+            <Answer answer={this.props.answer}/>
+            <Button className="GameEnder" onClick={this.props.endTurn}>Press this to end your turn</Button>
 
           </div>
         );

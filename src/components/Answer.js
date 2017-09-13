@@ -9,7 +9,7 @@ const Answer = (props) => {
   return(
     <Card className="AnswerCard">
       <Card.Content>
-        <Card.Header>Draw a </Card.Header>
+        <Card.Header>It's your turn. Draw the below. </Card.Header>
         <Card.Description>{props.answer}</Card.Description>
       </Card.Content>
     </Card>
