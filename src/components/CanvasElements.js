@@ -40,7 +40,7 @@ class CanvasElements extends React.Component {
     render() {
         return (
           <div>
-            <Stage width={500} height={500}>
+            <Stage width={400} height={400}>
                 <Layer>
                    <Drawing saveState={this.state.save} saveImage={this.saveImage}  sendCanvas={this.props.sendCanvas}/>
                 </Layer>

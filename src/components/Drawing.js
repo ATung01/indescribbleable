@@ -85,8 +85,8 @@ export default class Drawing extends React.Component {
         id={"grabbable"}
         image={canvas}
         ref={node => (this.image = node)}
-        width={500}
-        height={500}
+        width={400}
+        height={400}
         stroke="black"
         onMouseDown={this.handleMouseDown}
         onTouchStart={this.handleMouseDown}

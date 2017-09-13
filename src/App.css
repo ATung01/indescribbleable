@@ -28,6 +28,10 @@ table {
   right:10px;
 }
 
+canvas {
+  cursor:'pointer'
+}
+
 .ui.form {
   margin-top:50%;
   /*vertical-align: middle;*/
