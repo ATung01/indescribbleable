@@ -65,7 +65,7 @@ class Homepage extends Component {
   render() {
     return (
       <div className="Homepage container">
-      <ActionCableProvider url='ws://localhost:3000/cable'>
+      <ActionCableProvider url='ws://https://indescribbleable-ruby.herokuapp.com/'>
         <Grid centered columns={3}>
               {this.loggedCheck()}
           </Grid>
