@@ -8,6 +8,7 @@ import { Button, Grid } from 'semantic-ui-react'
 import ReactCountdownClock from 'react-countdown-clock'
 import RobotGuess from './RobotGuess'
 import Answer from './Answer'
+import Guidelines from './Guidelines'
 
 
 
@@ -160,15 +161,13 @@ export default class Lobby extends React.Component {
       <div>
         <ActionCable ref='roomChannel' channel={{channel: 'MatchChannel', room: this.props.match.roomCode}} onReceived={this.onReceived} />
         <Grid.Column>
+        <Guidelines />
         {this.state.started === "t" && this.state.currentTurn.id === this.state.currentUser.id && this.state.ended === 'f' &&
         <CanvasElements
             addToStore={this.addToStore}
             sendTurnStatus={this.sendTurnStatus}
             sendCanvas={this.sendCanvas}
-            answer={this.state.answer}
-            endTurn={this.endTurn}
-            /> }
-
+            answer={this.state.answer} /> }
         </Grid.Column>
 
         <Grid.Column>
@@ -178,8 +177,7 @@ export default class Lobby extends React.Component {
             savedImage={this.state.savedImage}
             takeAGuess={this.takeAGuess}
             updateGuess={this.updateGuess}
-            correctGuess={this.state.correctGuess}
-            />}
+            correctGuess={this.state.correctGuess} />}
         </Grid.Column>
 
         <Grid.Column>
@@ -189,7 +187,10 @@ export default class Lobby extends React.Component {
         size={80}
         onComplete={this.endTurn} />}
           {this.state.started === "f" && <Button className="GameStarter" onClick={this.startGame}>Press this to start</Button>}
-          < PlayerList players={this.state.users} />
+          < PlayerList
+              players={this.state.users}
+              roomCode={this.props.match.roomCode}
+              endTurn={this.endTurn}/>
           {this.state.ended === "t" && < EndScreen />}
           {this.state.showRobot === "t" && < RobotGuess guesses={this.state.robotGuess}/>}
         </Grid.Column>

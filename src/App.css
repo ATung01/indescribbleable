@@ -22,10 +22,44 @@ body, html {
   margin-top:0;
 }
 
-table {
+/*table {
   position:absolute;
   top:0;
   right:10px;
+}*/
+
+.Guidelines {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 25%;
+  background-color: white;
+  border-radius: .28571429rem;
+}
+
+.ui.vertical.segment{
+  text-align: left;
+  padding: 10px;
+}
+.ui.vertical.segment.HTP{
+  font-size: large;
+  font-style: oblique;
+  font-weight: bold;
+}
+
+.RoomCode {
+  position:absolute ;
+  top:10px;
+  right:10px;
+  width:175px;
+}
+
+.ui.button.GameEnder {
+  width: 160px;
+}
+
+.ui.card.RoomCode {
+  width: 175px;
 }
 
 /*.ui.card.AnswerCard {

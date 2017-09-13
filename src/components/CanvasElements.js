@@ -2,7 +2,6 @@ import React from 'react';
 import {Layer, Stage} from 'react-konva';
 import Drawing from './Drawing'
 import Answer from './Answer'
-import { Button } from 'semantic-ui-react'
 
 
 var canvas
@@ -43,13 +42,13 @@ class CanvasElements extends React.Component {
     render() {
         return (
           <div>
+            <h1>Your turn! </h1>
             <Stage width={400} height={400}>
                 <Layer>
                    <Drawing saveState={this.state.save} saveImage={this.saveImage}  sendCanvas={this.props.sendCanvas}/>
                 </Layer>
             </Stage>
             <Answer answer={this.props.answer}/>
-            <Button className="GameEnder" onClick={this.props.endTurn}>Press this to end your turn</Button>
 
           </div>
         );

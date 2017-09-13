@@ -1,5 +1,7 @@
 import React from 'react'
-import { Image, Table, Header } from 'semantic-ui-react'
+import { Image, Table, Header, Card, Grid } from 'semantic-ui-react'
+import { Button } from 'semantic-ui-react'
+
 
 const PlayerList = (props) => {
   const List = () => {
@@ -23,7 +25,7 @@ const PlayerList = (props) => {
 
 
     return (
-      <Table basic='very' celled collapsing className="player-list">
+      <Table celled collapsing className="player-list" verticalAlign="middle">
       <Table.Header>
       <Table.Row>
       <Table.HeaderCell>Player</Table.HeaderCell>
@@ -40,8 +42,23 @@ const PlayerList = (props) => {
 
 
   return (
-    <div>
-      {List()}
+    <div className="RoomCode">
+      <Grid >
+        <Grid.Row>
+          <Card className="RoomCode">
+            <Card.Content>
+              <Card.Header>RoomCode: {props.roomCode}</Card.Header>
+              <Card.Description></Card.Description>
+            </Card.Content>
+          </Card>
+        </Grid.Row>
+        <Grid.Row>
+          {List()}
+        </Grid.Row>
+        <Grid.Row>
+          <Button className="GameEnder" onClick={props.endTurn}>Press this to end your turn</Button>
+        </Grid.Row>
+      </Grid>
     </div>
   )
 
