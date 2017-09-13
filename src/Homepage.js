@@ -32,13 +32,13 @@ class Homepage extends Component {
 
 
     let myInit = {
-      method: "post",
+      method: "POST",
       body: JSON.stringify(this.state),
       headers: {
         "Content-Type": "application/json"
       }
     }
-    fetch("http://localhost:3000/matches", myInit)
+    fetch("https://indescribbleable-ruby.herokuapp.com/matches", myInit)
     .then(resp => resp.json())
     .then(result => result["error"] ? console.log(result) : (this.updateAppStateMatch(result),
     this.setState({
@@ -65,7 +65,7 @@ class Homepage extends Component {
   render() {
     return (
       <div className="Homepage container">
-      <ActionCableProvider url='ws://https://indescribbleable-ruby.herokuapp.com/'>
+      <ActionCableProvider url='wss://indescribbleable-ruby.herokuapp.com/cable'>
         <Grid centered columns={3}>
               {this.loggedCheck()}
           </Grid>
