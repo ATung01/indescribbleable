@@ -82,6 +82,7 @@ export default class Lobby extends React.Component {
   takeAGuess = () => {
     if (this.state.guess === this.state.answer) {
       this.setState({
+        wrongAnswer: "f",
         correctGuess: "t"
       })
     }
