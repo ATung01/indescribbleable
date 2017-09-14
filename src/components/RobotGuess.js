@@ -6,7 +6,7 @@ export default class RobotGuess extends React.Component {
     // return this.props.guesses.map((guess)=>{
 
       return (
-        <Card className="RobotGuess">
+        <Card width={300} className="RobotGuess">
           <Image src='/assets/images/avatar/large/daniel.jpg' />
           <Card.Content>
           <Card.Header>Mr. Robot</Card.Header>

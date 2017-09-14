@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Logger from './components/Logger'
 import Lobby from './components/Lobby'
-import { Grid, Image } from 'semantic-ui-react'
+import { Image } from 'semantic-ui-react'
 import ActionCableProvider from 'react-actioncable-provider'
 
 
@@ -55,7 +55,7 @@ class Homepage extends Component {
       return (
           <div className="logger-wrapper">
             <Logger loggedIn={this.loggedIn} handleNickname={this.handleNickname} handleRoom={this.handleRoom} state={this.state} />
-            <p className="error">{this.state.error}</p>
+            <h3 className="error">{this.state.error}</h3>
           </div>
       )
 
@@ -69,8 +69,8 @@ class Homepage extends Component {
   // <Grid centered columns={3}>
   // </Grid>
 
-
   // <ActionCableProvider url='ws://localhost:3000/cable'>
+
 
   render() {
     return (

@@ -12,11 +12,16 @@ export default class Guesser extends React.Component{
     return dataStr.concat(this.props.savedImage)
   }
 
+  handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      this.props.takeAGuess();
+    }
+  }
 
 
   render(){
     return (
-      <div className="imgBg-container">
+      <div className="imgBg-container" onKeyPress={this.handleKeyPress}>
         <h1>Current Turn: {this.props.currentTurn.nickname} </h1>
         <img className="imgBg"src={this.updateImage()} alt=""/>
         { this.props.correctGuess === "f" &&

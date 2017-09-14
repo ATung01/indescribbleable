@@ -4,8 +4,7 @@ import PlayerList from './PlayerList'
 import Guesser from './Guesser'
 import {ActionCable} from 'react-actioncable-provider'
 import EndScreen from './EndScreen'
-import { Button, Grid, Image } from 'semantic-ui-react'
-import RobotGuess from './RobotGuess'
+import { Button, Image } from 'semantic-ui-react'
 import Guidelines from './Guidelines'
 
 
@@ -185,9 +184,11 @@ export default class Lobby extends React.Component {
           {this.state.started === "f" && <Button className="GameStarter" onClick={this.startGame}>Press this to start the game once everyone is ready.</Button>}
           < PlayerList
               players={this.state.users}
+              showEndTurn={this.state.currentTurn.id === this.state.currentUser.id}
               roomCode={this.props.match.roomCode}
-              endTurn={this.endTurn}/>
-          {this.state.showRobot === "t" && < RobotGuess guesses={this.state.robotGuess}/>}
+              endTurn={this.endTurn}
+              showRobot={this.state.showRobot}
+              robotGuess={this.state.robotGuess}/>
 
 
       </div>

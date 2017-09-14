@@ -2,7 +2,6 @@ import React from 'react';
 import {Layer, Stage} from 'react-konva';
 import Drawing from './Drawing'
 import Answer from './Answer'
-import ReactCountdownClock from 'react-countdown-clock'
 
 
 
@@ -37,16 +36,13 @@ class CanvasElements extends React.Component {
         return (
           <div className="canvas-container">
             <h1>Your turn! </h1>
-            <Stage width={400} height={400}>
+            <Stage className="Stage" width={400} height={400}>
                 <Layer>
                    <Drawing saveState={this.state.save} saveImage={this.saveImage}  sendCanvas={this.props.sendCanvas}/>
                 </Layer>
             </Stage>
-            <Answer answer={this.props.answer}/>
-            <ReactCountdownClock seconds={60}
-            color="#000"
-            size={80}
-            onComplete={this.props.endTurn} />
+            <Answer answer={this.props.answer} endTurn={this.props.endTurn}/>
+
 
           </div>
         );

@@ -11,7 +11,7 @@ const EndScreen = (props) => {
 
 return (
   <div className="EndScreen">
-    <h1>Congratulations to the Winners!</h1>
+    <h1>Congratulations to the Winner!</h1>
     <h1>{showWinners()}</h1>
   </div>
 )

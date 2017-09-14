@@ -1,6 +1,8 @@
 import React from 'react'
-import { Image, Table, Header, Card, Grid } from 'semantic-ui-react'
+import { Table, Header, Card } from 'semantic-ui-react'
 import { Button } from 'semantic-ui-react'
+import RobotGuess from './RobotGuess'
+
 
 
 const PlayerList = (props) => {
@@ -9,8 +11,7 @@ const PlayerList = (props) => {
       return (
         <Table.Row>
         <Table.Cell>
-        <Header as='h4' image>
-        <Image src='/assets/images/avatar/small/lena.png' shape='rounded' size='mini' />
+        <Header>
         <Header.Content>
         {user.nickname}
         </Header.Content>
@@ -28,7 +29,7 @@ const PlayerList = (props) => {
       <Table celled  className="player-list" verticalAlign="middle">
       <Table.Header>
       <Table.Row>
-      <Table.HeaderCell>Player</Table.HeaderCell>
+      <Table.HeaderCell>Players</Table.HeaderCell>
       <Table.HeaderCell>Score</Table.HeaderCell>
       </Table.Row>
       </Table.Header>
@@ -50,7 +51,8 @@ const PlayerList = (props) => {
             </Card.Content>
           </Card>
           {List()}
-          <Button className="GameEnder" onClick={props.endTurn}>Press this to end your turn</Button>
+          {props.showRobot === "t" && < RobotGuess guesses={props.robotGuess}/>}
+          {props.showEndTurn && <Button className="GameEnder" onClick={props.endTurn}>Press this to end your turn</Button>}
     </div>
   )
 
