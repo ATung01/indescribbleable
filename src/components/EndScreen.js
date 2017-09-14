@@ -1,10 +1,18 @@
 import React from 'react'
 
-const EndScreen = () => {
+const EndScreen = (props) => {
+
+  var showWinners = () => {
+    
+    return props.winners.map((winner)=>{return winner.nickname}).join(', ')
+
+  }
+
 
 return (
   <div>
-    <p>game end</p>
+    <h1>Congratulations to the Winners!</h1>
+    <h1>{showWinners()}</h1>
   </div>
 )
 

@@ -4,10 +4,9 @@ import PlayerList from './PlayerList'
 import Guesser from './Guesser'
 import {ActionCable} from 'react-actioncable-provider'
 import EndScreen from './EndScreen'
-import { Button, Grid } from 'semantic-ui-react'
+import { Button, Grid, Image } from 'semantic-ui-react'
 import ReactCountdownClock from 'react-countdown-clock'
 import RobotGuess from './RobotGuess'
-import Answer from './Answer'
 import Guidelines from './Guidelines'
 
 
@@ -127,8 +126,9 @@ export default class Lobby extends React.Component {
         this.setState({
           ended: "t",
           showRobot: "t",
-          robotGuess: result.endGame.robot_guesses
-        })
+          robotGuess: result.endGame.robot_guesses,
+          winners: result.endGame.c_user.ended
+        }, console.log(result.endGame))
       }
       else if (!!result.endTurn) {
         this.sendTurnStatus()
@@ -159,6 +159,7 @@ export default class Lobby extends React.Component {
       console.log(this.props.match.roomCode)
     return (
       <div>
+      <Image className="gif" src="https://media.giphy.com/media/Ez5jnMIxk2Dug/giphy.gif" fluid />
         <ActionCable ref='roomChannel' channel={{channel: 'MatchChannel', room: this.props.match.roomCode}} onReceived={this.onReceived} />
         <Grid.Column>
         <Guidelines />
@@ -186,12 +187,12 @@ export default class Lobby extends React.Component {
         color="#000"
         size={80}
         onComplete={this.endTurn} />}
-          {this.state.started === "f" && <Button className="GameStarter" onClick={this.startGame}>Press this to start</Button>}
+          {this.state.started === "f" && <Button className="GameStarter" onClick={this.startGame}>Press this to start the game once everyone is ready.</Button>}
           < PlayerList
               players={this.state.users}
               roomCode={this.props.match.roomCode}
               endTurn={this.endTurn}/>
-          {this.state.ended === "t" && < EndScreen />}
+          {this.state.ended === "t" && < EndScreen winners={this.state.winners}/>}
           {this.state.showRobot === "t" && < RobotGuess guesses={this.state.robotGuess}/>}
         </Grid.Column>
 

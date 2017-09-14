@@ -2,7 +2,7 @@
   text-align: center;
 }
 
-body, html {
+body{
   background:lightblue;
 }
 
@@ -12,7 +12,7 @@ body, html {
 }
 
 .App-header {
-  background-color: #222;
+  /*background-color: #222;*/
   height: 150px;
   padding: 20px;
   color: white;
@@ -62,14 +62,36 @@ body, html {
   width: 175px;
 }
 
+.ui.fluid.image.gif {
+  z-index: -1;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
 /*.ui.card.AnswerCard {
   position:absolute;
   bottom:0;
   left:0;
 }*/
 
+.imgBg {
+  background:#fff!important;
+  width: 60%;
+
+}
+
 canvas {
-  cursor:'pointer'
+  cursor:'pointer';
+  /*background-color: white!important;*/
+
+}
+
+.konvajs-content {
+  background-color: white!important;
+
 }
 
 .ui.form.Logger {
@@ -89,7 +111,7 @@ canvas {
 
 .Homepage.container {
   height: 600px;
-  background-color: lightblue;
+  /*background-color: lightblue;*/
 }
 
 .App-intro {

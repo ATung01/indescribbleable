@@ -18,7 +18,7 @@ export default class Guesser extends React.Component{
     return (
       <div >
         <h1>Current Turn: {this.props.currentTurn.nickname} </h1>
-        <img src={this.updateImage()} alt=""/>
+        <img className="imgBg" src={this.updateImage()} alt=""/>
         { this.props.correctGuess === "f" &&
         <Form >
           <Form.Field >

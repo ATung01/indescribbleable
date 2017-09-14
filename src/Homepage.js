@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import './App.css';
 import Logger from './components/Logger'
 import Lobby from './components/Lobby'
-import { Grid } from 'semantic-ui-react'
+import { Grid, Image } from 'semantic-ui-react'
 import ActionCableProvider from 'react-actioncable-provider'
+
 
 
 class Homepage extends Component {
@@ -62,15 +63,20 @@ class Homepage extends Component {
 
     }
     else {
-      return <Lobby  match={this.state.match}/>
+      return <Lobby match={this.state.match}/>
     }
   }
   // <ActionCableProvider url='ws://localhost:3000/cable'>
+  // https://media.giphy.com/media/hL8a3mIQK8Ehy/giphy.gif
+  // https://media.giphy.com/media/MzS3kH6Dj0dag/giphy.gif
 
   render() {
     return (
       <div className="Homepage container">
+      {this.state.loggedIn === false && <Image className="gif" src="https://media.giphy.com/media/hL8a3mIQK8Ehy/giphy.gif" fluid />}
       <ActionCableProvider url='wss://indescribbleable-ruby.herokuapp.com/cable'>
+
+
         <Grid centered columns={3}>
               {this.loggedCheck()}
           </Grid>
