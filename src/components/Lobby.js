@@ -26,6 +26,7 @@ export default class Lobby extends React.Component {
     savedImage: "",
     guess: "",
     correctGuess: "f",
+    wrongAnswer: "f",
     showRobot: "f",
     robotGuess: [],
     correct: "f",
@@ -140,7 +141,8 @@ export default class Lobby extends React.Component {
           showRobot: "t",
           correctGuess: "f",
           robotGuess: result.endTurn.robot_guesses,
-          savedImage: ""
+          savedImage: "",
+          wrongAnswer: "f"
         })
       }
 
@@ -148,7 +150,7 @@ export default class Lobby extends React.Component {
         this.sendTurnStatus()
       }
       else if (!!result.guess.wrong) {
-        console.log("wrong answer")
+        this.setState({wrongAnswer: "t"})
       }
       else {
         console.log("error", result)
@@ -178,7 +180,8 @@ export default class Lobby extends React.Component {
             savedImage={this.state.savedImage}
             takeAGuess={this.takeAGuess}
             updateGuess={this.updateGuess}
-            correctGuess={this.state.correctGuess} />}
+            correctGuess={this.state.correctGuess}
+            wrongAnswer={this.state.wrongAnswer} />}
 
 
           {this.state.started === "f" && <Button className="GameStarter" onClick={this.startGame}>Press this to start the game once everyone is ready.</Button>}
