@@ -52,6 +52,13 @@ body{
   font-weight: bold;
 }
 
+.RobotContent.content {
+  background: white!important;
+}
+.ui.image.RobotImage {
+  /*opacity: .5;*/
+  /*display:block;*/
+}
 
 .login-form {
   width:45%;
@@ -87,7 +94,7 @@ body{
 .ui.button.GameStarter {
   float: left;
   margin: 0 20px;
-  width: 40%;
+  width: 35%;
 }
 
 .error {
@@ -147,18 +154,24 @@ body{
 .ui.card.RobotGuess {
   margin-top: 20px;
   margin-bottom: 20px;
+  background:transparent;
+  box-shadow: none;
+
 }
 
-.EndScreen
-{
-    color: black;
-    text-align: center;
-    padding: 20px 20px;
-    /*text-shadow:
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;*/
+.EndScreen {
+
+  width:40%;
+  margin: auto;
+  color: black;
+  text-align: center;
+  padding: 20px 20px;
+
+}
+
+.ui.card.EndScreen-Card {
+  width: 200px !important;
+  margin: auto;
 }
 
 canvas {

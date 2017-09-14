@@ -7,8 +7,8 @@ export default class RobotGuess extends React.Component {
 
       return (
         <Card width={300} className="RobotGuess">
-          <Image src='/assets/images/avatar/large/daniel.jpg' />
-          <Card.Content>
+          <Image className="RobotImage"src='robot.svg' />
+          <Card.Content className="RobotContent">
           <Card.Header>Mr. Robot</Card.Header>
           <Card.Description>Here's a list of stuff I thought that could be: {this.props.guesses.join(', ')}.</Card.Description>
           </Card.Content>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Card } from 'semantic-ui-react'
 
 const EndScreen = (props) => {
 
@@ -11,8 +12,16 @@ const EndScreen = (props) => {
 
 return (
   <div className="EndScreen">
-    <h1>Congratulations to the Winner!</h1>
-    <h1>{showWinners()}</h1>
+    <Card className="EndScreen-Card">
+      <Card.Content>
+        <Card.Header>
+          Congratulations!
+        </Card.Header>
+        <Card.Description>
+          Winners: {showWinners()}
+        </Card.Description>
+      </Card.Content>
+    </Card>
   </div>
 )
 
