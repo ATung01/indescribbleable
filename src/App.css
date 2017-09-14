@@ -2,8 +2,10 @@
   text-align: center;
 }
 
+
+
 body{
-  background:lightblue;
+  background: #023061
 }
 
 .App-logo {
@@ -29,10 +31,7 @@ body{
 }*/
 
 .Guidelines {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  width: 25%;
+  /*width: 25%;*/
   background-color: white;
   border-radius: .28571429rem;
 }
@@ -47,24 +46,54 @@ body{
   font-weight: bold;
 }
 
+
+.login-form {
+  width:45%;
+  background:transparent;
+  margin-top:15%!important;
+  margin:auto;
+}
+
+.Guidelines,
 .RoomCode {
-  position:absolute ;
+  width:30%;
+  float:left;
+  padding: 0 20px;
+}
+.canvas-container, .EndScreen {
+  width:40%;
+  float:left;
+  padding: 0 20px;
+
+}
+.RoomCode {
+  align-items: center;
+  /*position:relative ;
   top:10px;
   right:10px;
-  width:175px;
+  width:30% !important;*/
+}
+.ui.button.GameStarter {
+  float: left;
+  margin: 0 20px;
+
 }
 
-.ui.button.GameEnder {
+.container {
+  width:95%;
+  margin:auto;
+}
+/*.ui.button.GameEnder {
   width: 160px;
-}
+}*/
 
-.ui.card.RoomCode {
+/*.ui.card.RoomCode {
   width: 175px;
-}
+}*/
 
 .ui.fluid.image.gif {
   z-index: -1;
-  height: 100%;
+  height: 120%;
   width: 100%;
   position: absolute;
     left: 0px;
@@ -76,11 +105,21 @@ body{
   bottom:0;
   left:0;
 }*/
+.imgBg-container {
+  width:40%;
+  float:left;
+  padding: 0 20px;
+}
 
 .imgBg {
   background:#fff!important;
-  width: 60%;
+  width: 400px;
 
+
+}
+
+.ui.card.RobotGuess {
+  margin-left: auto;
 }
 
 canvas {
@@ -94,17 +133,16 @@ canvas {
 
 }
 
-.ui.form.Logger {
-  margin-top:50%;
-  /*vertical-align: middle;*/
-}
+
+
 .react-countdown-clock {
-  float: right;
+  float: left;
+  /*display: none;*/
 }
 
-.ui.celled.collapsing.very.basic.table.player-list {
+/*.ui.celled.collapsing.very.basic.table.player-list {
   float: right;
-}
+}*/
 .Stage {
   background-color: red
 }
@@ -125,4 +163,14 @@ canvas {
 
 .player-list {
   float: right;
+}
+
+
+@media (max-width:768px) {
+  .canvas-container,
+  .ui.button.GameStarter,
+  .Guidelines,
+  .RoomCode {
+    width:100%;
+  }
 }

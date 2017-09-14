@@ -5,7 +5,6 @@ import Guesser from './Guesser'
 import {ActionCable} from 'react-actioncable-provider'
 import EndScreen from './EndScreen'
 import { Button, Grid, Image } from 'semantic-ui-react'
-import ReactCountdownClock from 'react-countdown-clock'
 import RobotGuess from './RobotGuess'
 import Guidelines from './Guidelines'
 
@@ -81,6 +80,11 @@ export default class Lobby extends React.Component {
     })
   }
   takeAGuess = () => {
+    if (this.state.guess === this.state.answer) {
+      this.setState({
+        correctGuess: "t"
+      })
+    }
     this.refs.roomChannel.perform('takeAGuess', {
       id: this.props.match.current_user.match_id,
       guess: this.state.guess,
@@ -135,15 +139,13 @@ export default class Lobby extends React.Component {
         this.setState({
           ready: "f",
           showRobot: "t",
+          correctGuess: "f",
           robotGuess: result.endTurn.robot_guesses,
           savedImage: ""
         })
       }
 
       else if (!!result.guess.points) {
-        this.setState({
-          correctGuess: "t"
-        })
         this.sendTurnStatus()
       }
       else if (!!result.guess.wrong) {
@@ -161,17 +163,16 @@ export default class Lobby extends React.Component {
       <div>
       <Image className="gif" src="https://media.giphy.com/media/Ez5jnMIxk2Dug/giphy.gif" fluid />
         <ActionCable ref='roomChannel' channel={{channel: 'MatchChannel', room: this.props.match.roomCode}} onReceived={this.onReceived} />
-        <Grid.Column>
         <Guidelines />
+        {this.state.ended === "t" && < EndScreen winners={this.state.winners}/>}
         {this.state.started === "t" && this.state.currentTurn.id === this.state.currentUser.id && this.state.ended === 'f' &&
         <CanvasElements
             addToStore={this.addToStore}
             sendTurnStatus={this.sendTurnStatus}
             sendCanvas={this.sendCanvas}
-            answer={this.state.answer} /> }
-        </Grid.Column>
+            answer={this.state.answer}
+            endTurn={this.endTurn} /> }
 
-        <Grid.Column>
           {this.state.started === "t" && this.state.currentTurn.id !== this.state.currentUser.id && this.state.ended === 'f' &&
           <Guesser
             currentTurn={this.state.currentTurn}
@@ -179,22 +180,14 @@ export default class Lobby extends React.Component {
             takeAGuess={this.takeAGuess}
             updateGuess={this.updateGuess}
             correctGuess={this.state.correctGuess} />}
-        </Grid.Column>
 
-        <Grid.Column>
-        {this.state.started === "t" && this.state.currentTurn.id === this.state.currentUser.id && this.state.ended === 'f' &&
-        <ReactCountdownClock seconds={60}
-        color="#000"
-        size={80}
-        onComplete={this.endTurn} />}
+
           {this.state.started === "f" && <Button className="GameStarter" onClick={this.startGame}>Press this to start the game once everyone is ready.</Button>}
           < PlayerList
               players={this.state.users}
               roomCode={this.props.match.roomCode}
               endTurn={this.endTurn}/>
-          {this.state.ended === "t" && < EndScreen winners={this.state.winners}/>}
           {this.state.showRobot === "t" && < RobotGuess guesses={this.state.robotGuess}/>}
-        </Grid.Column>
 
 
       </div>

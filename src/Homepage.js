@@ -53,12 +53,10 @@ class Homepage extends Component {
   loggedCheck = () => {
     if (this.state.loggedIn === false) {
       return (
-        <Grid.Column>
-          <div>
+          <div className="logger-wrapper">
             <Logger loggedIn={this.loggedIn} handleNickname={this.handleNickname} handleRoom={this.handleRoom} state={this.state} />
             <p className="error">{this.state.error}</p>
           </div>
-        </Grid.Column>
       )
 
     }
@@ -66,20 +64,20 @@ class Homepage extends Component {
       return <Lobby match={this.state.match}/>
     }
   }
-  // <ActionCableProvider url='ws://localhost:3000/cable'>
   // https://media.giphy.com/media/hL8a3mIQK8Ehy/giphy.gif
   // https://media.giphy.com/media/MzS3kH6Dj0dag/giphy.gif
+  // <Grid centered columns={3}>
+  // </Grid>
+
+
+  // <ActionCableProvider url='ws://localhost:3000/cable'>
 
   render() {
     return (
       <div className="Homepage container">
       {this.state.loggedIn === false && <Image className="gif" src="https://media.giphy.com/media/hL8a3mIQK8Ehy/giphy.gif" fluid />}
       <ActionCableProvider url='wss://indescribbleable-ruby.herokuapp.com/cable'>
-
-
-        <Grid centered columns={3}>
-              {this.loggedCheck()}
-          </Grid>
+            {this.loggedCheck()}
           </ActionCableProvider>
         </div>
     );

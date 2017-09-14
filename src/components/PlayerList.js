@@ -25,7 +25,7 @@ const PlayerList = (props) => {
 
 
     return (
-      <Table celled collapsing className="player-list" verticalAlign="middle">
+      <Table celled  className="player-list" verticalAlign="middle">
       <Table.Header>
       <Table.Row>
       <Table.HeaderCell>Player</Table.HeaderCell>
@@ -43,22 +43,14 @@ const PlayerList = (props) => {
 
   return (
     <div className="RoomCode">
-      <Grid >
-        <Grid.Row>
           <Card className="RoomCode">
             <Card.Content>
               <Card.Header>RoomCode: {props.roomCode}</Card.Header>
               <Card.Description></Card.Description>
             </Card.Content>
           </Card>
-        </Grid.Row>
-        <Grid.Row>
           {List()}
-        </Grid.Row>
-        <Grid.Row>
           <Button className="GameEnder" onClick={props.endTurn}>Press this to end your turn</Button>
-        </Grid.Row>
-      </Grid>
     </div>
   )
 

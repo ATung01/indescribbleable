@@ -16,9 +16,9 @@ export default class Guesser extends React.Component{
 
   render(){
     return (
-      <div >
+      <div className="imgBg-container">
         <h1>Current Turn: {this.props.currentTurn.nickname} </h1>
-        <img className="imgBg" src={this.updateImage()} alt=""/>
+        <img className="imgBg"src={this.updateImage()} alt=""/>
         { this.props.correctGuess === "f" &&
         <Form >
           <Form.Field >
@@ -26,7 +26,8 @@ export default class Guesser extends React.Component{
             <input placeholder='Your Guess' onChange={this.props.updateGuess} />
           </Form.Field>
           <Button type='button' onClick={this.props.takeAGuess}>Submit</Button>
-        </Form> || <h3>You got it right!  </h3>}
+        </Form>}
+          {this.props.correctGuess === "t" && <h3>You got it right!  </h3>}
       </div>
     )
   }

@@ -11,7 +11,7 @@ export default class Logger extends React.Component {
 
   render(){
     return (
-    <div>
+    <div className="login-form">
       <Form className="Logger">
         <Form.Field >
           <label>Room Code</label>
