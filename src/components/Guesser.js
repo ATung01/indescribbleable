@@ -32,7 +32,6 @@ export default class Guesser extends React.Component{
           </Form.Field>
           <Button type='button' onClick={this.props.takeAGuess}>Submit</Button>
         </Form>}
-          {this.props.wrongAnswer === "t" && <h3 className="Wrong"> Wrong! </h3>}
           {this.props.correctGuess === "t" && <h3 className="Right">You got it right!  </h3>}
       </div>
     )
