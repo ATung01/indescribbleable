@@ -5,8 +5,8 @@ export default class Logger extends React.Component {
 
   state = { modalOpen: false }
 
-  handleOpen = (e) => {
-    e.preventDefault()
+  handleOpen = (event) => {
+    event.preventDefault()
     this.setState({ modalOpen: true })
   }
 
