@@ -64,10 +64,8 @@ class Homepage extends Component {
       return <Lobby match={this.state.match}/>
     }
   }
-  // https://media.giphy.com/media/hL8a3mIQK8Ehy/giphy.gif
-  // https://media.giphy.com/media/MzS3kH6Dj0dag/giphy.gif
-  // <Grid centered columns={3}>
-  // </Grid>
+
+
 
   // <ActionCableProvider url='ws://localhost:3000/cable'>
 
