@@ -69,9 +69,7 @@ export default class Lobby extends React.Component {
   sendCanvas = (image) => {
     this.refs.roomChannel.perform('sendCanvas', {image: image.src, room_code: this.state.roomCode})
   }
-  // sendToRobot = () => {
-  //   this.refs.roomChannel.perform('sendToRobot', {image: this.state.savedImage, room_code: this.state.roomCode})
-  // }
+
 
   updateGuess = (event) => {
     this.setState({
