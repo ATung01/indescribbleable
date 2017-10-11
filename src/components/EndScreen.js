@@ -3,11 +3,9 @@ import { Card } from 'semantic-ui-react'
 
 const EndScreen = (props) => {
 
-  var showWinners = () => {
-
-    return props.winners.map((winner)=>{return winner.nickname}).join(', ')
-
-  }
+var showWinners = () => {
+  return props.winners.map((winner)=>{return winner.nickname}).join(', ')
+}
 
 
 return (
@@ -23,8 +21,7 @@ return (
       </Card.Content>
     </Card>
   </div>
-)
-
+  )
 }
 
 export default EndScreen
