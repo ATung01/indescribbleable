@@ -191,8 +191,6 @@ export default class Lobby extends React.Component {
               endTurn={this.endTurn}
               showRobot={this.state.showRobot}
               robotGuess={this.state.robotGuess}/>
-
-
       </div>
     )
   }
